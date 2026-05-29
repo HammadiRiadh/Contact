@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title> MAD SOFT - Contact & Mes Projets</title>
+    <!-- أيقونة الموقع (نفس صورة الخلفية) -->
+    <link rel="icon" type="image/jpeg" href="background.jpg">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap');
+
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: rgba(0, 0, 0, 0.25);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+            --accent: #4da8da;
+            --accent2: #7c5ce7;
+            --accent3: #e74d9c;
+            --text-primary: #f0f0f0;
+            --text-secondary: #000000; /* تغيير إلى الأسود */
+            /* صورة الخلفية */
+            --bg-image: url('background.jpg');
+            --facebook: #1877F2;
+            --instagram: #E1306C;
+            --gmail: #EA4335;
+            --phone: #34A853;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background: #0a0a14;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .bg-image-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: var(--bg-image);
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            z-index: -2; opacity: 0.9;
+        }
+        .bg-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 10, 20, 0.35); z-index: -1; pointer-events: none;
+        }
+        .bg-animation {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+        }
+        .orb {
+            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.25;
+            animation: floatOrb 12s ease-in-out infinite;
+        }
+        .orb:nth-child(1) { width: 350px; height: 350px; background: radial-gradient(circle, #4da8da 0%, transparent 70%); top: -8%; left: -5%; animation-delay: 0s; animation-duration: 14s; }
+        .orb:nth-child(2) { width: 280px; height: 280px; background: radial-gradient(circle, #7c5ce7 0%, transparent 70%); bottom: -10%; right: -6%; animation-delay: -4s; animation-duration: 16s; }
+        .orb:nth-child(3) { width: 240px; height: 240px; background: radial-gradient(circle, #e74d9c 0%, transparent 70%); top: 45%; left: 30%; animation-delay: -8s; animation-duration: 11s; }
+        .orb:nth-child(4) { width: 200px; height: 200px; background: radial-gradient(circle, #4da8da 0%, transparent 70%); top: 20%; right: 15%; animation-delay: -3s; animation-duration: 13s; }
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(40px, -50px) scale(1.15); }
+            50% { transform: translate(-20px, 30px) scale(0.9); }
+            75% { transform: translate(-45px, -20px) scale(1.1); }
+        }
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .particle {
+            position: absolute; border-radius: 50%; background: rgba(255,255,255,0.3);
+            animation: floatParticle 8s ease-in-out infinite;
+        }
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; } 90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(40px); opacity: 0; }
+        }
+        .main-container { position: relative; z-index: 2; width: 90%; max-width: 520px; margin: 20px auto; }
+        .glass-card {
+            background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1.5px solid var(--glass-border); border-radius: 28px;
+            box-shadow: 0 20px 50px var(--glass-shadow), 0 8px 20px rgba(0,0,0,0.2), inset 0 1px 0 var(--glass-highlight);
+            padding: 30px 24px 24px; transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .glass-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.03) 0%, transparent 60%);
+            pointer-events: none; z-index: 0;
+        }
+        .glass-card > * { position: relative; z-index: 1; }
+        .profile-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+        .profile-img-wrapper {
+            position: relative; width: 120px; height: 120px; border-radius: 50%; margin-bottom: 14px;
+            cursor: pointer; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .profile-img-wrapper:hover { transform: scale(1.06); }
+        .profile-img-wrapper:active { transform: scale(0.94); }
+        .profile-img-ring {
+            position: absolute; inset: -6px; border-radius: 50%; padding: 3px;
+            background: conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent), var(--accent2), var(--accent3), var(--accent));
+            animation: rotateRing 6s linear infinite;
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 3px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 3px));
+        }
+        @keyframes rotateRing { to { transform: rotate(360deg); } }
+        .profile-img-inner {
+            width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .profile-img-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .profile-placeholder {
+            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #2a3a5c, #1a1a30); border-radius: 50%;
+        }
+        .profile-placeholder svg { width: 55px; height: 55px; opacity: 0.7; }
+        .profile-name {
+            font-size: 1.6rem; font-weight: 700; color: #fff; letter-spacing: 0.5px;
+            text-align: center; text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .profile-badge {
+            display: inline-block; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px; padding: 5px 16px; font-size: 0.8rem; color: #c0d0e0; margin-top: 6px;
+            backdrop-filter: blur(5px);
+        }
+        .tabs-nav {
+            display: flex; gap: 6px; margin: 20px 0 18px; background: rgba(255,255,255,0.04);
+            border-radius: 16px; padding: 5px; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .tab-btn {
+            flex: 1; padding: 11px 10px; border: none; border-radius: 12px; cursor: pointer;
+            font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 600; color: #b0b0c0;
+            background: transparent; transition: all 0.35s; white-space: nowrap; outline: none; text-align: center;
+        }
+        .tab-btn:hover { color: #e0e0f0; background: rgba(255,255,255,0.04); }
+        .tab-btn:active { transform: scale(0.96); }
+        .tab-btn.active {
+            color: #fff; background: rgba(255,255,255,0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1); font-weight: 700;
+        }
+        .tab-btn .tab-icon { display: block; font-size: 1.3rem; margin-bottom: 3px; }
+        .tab-content { display: none; animation: fadeSlideIn 0.45s ease forwards; }
+        .tab-content.active { display: block; }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+        .contact-card {
+            background: rgba(255,255,255,0.03); border: 1.5px solid rgba(255,255,255,0.1);
+            border-radius: 16px; padding: 16px 14px; text-align: center; text-decoration: none;
+            color: #fff; transition: all 0.3s ease; backdrop-filter: blur(5px);
+            display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer;
+        }
+        .contact-card:hover {
+            background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25);
+            transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        }
+        .contact-card:active { transform: scale(0.96); }
+        .contact-card .card-icon {
+            width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center;
+            justify-content: center; margin-bottom: 4px;
+        }
+        .contact-card .card-icon svg { width: 28px; height: 28px; fill: white; }
+        .contact-card .card-label { font-weight: 700; font-size: 0.9rem; color: #fff; }
+        .contact-card .card-value { font-size: 0.7rem; color: #000; word-break: break-all; line-height: 1.3; } /* أسود */
+        .icon-facebook { background: var(--facebook); }
+        .icon-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .icon-gmail { background: var(--gmail); }
+        .icon-phone { background: var(--phone); }
+        .works-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+        .work-card {
+            background: rgba(255,255,255,0.03); border: 1.5px solid rgba(255,255,255,0.1);
+            border-radius: 16px; padding: 14px; text-align: center; text-decoration: none;
+            color: #fff; transition: all 0.3s ease; backdrop-filter: blur(5px);
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .work-card.no-link { cursor: default; }
+        .work-card.no-link:hover {
+            transform: none; background: rgba(255,255,255,0.03);
+            border-color: rgba(255,255,255,0.1); box-shadow: none;
+        }
+        .work-card:hover {
+            background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25);
+            transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        }
+        .work-card .work-img {
+            width: 100%; aspect-ratio: 16/10; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            background-size: cover; background-position: center; background-repeat: no-repeat; overflow: hidden;
+        }
+        .work-card .work-title { font-weight: 700; font-size: 0.9rem; }
+        .work-card .work-desc { font-size: 0.7rem; color: #000; line-height: 1.3; } /* أسود */
+        .work-icon-container {
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(4px);
+            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+        }
+        .copy-toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: rgba(30,30,50,0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.25);
+            color: #fff; padding: 12px 24px; border-radius: 30px; font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem; z-index: 999; pointer-events: none;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .copy-toast.show { transform: translateX(-50%) translateY(0); }
+        @media screen and (max-width: 480px) {
+            .glass-card { padding: 22px 16px 18px; border-radius: 24px; }
+            .profile-img-wrapper { width: 100px; height: 100px; }
+            .profile-name { font-size: 1.4rem; }
+            .tab-btn { font-size: 0.8rem; padding: 8px 5px; }
+            .tab-btn .tab-icon { font-size: 1.1rem; }
+            .contact-card { padding: 13px 12px; }
+            .work-card { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-image-layer" aria-hidden="true"></div>
+    <div class="bg-overlay" aria-hidden="true"></div>
+    <div class="bg-animation">
+        <div class="orb"></div><div class="orb"></div><div class="orb"></div><div class="orb"></div>
+    </div>
+    <div class="particles" id="particlesContainer"></div>
+
+    <div class="main-container">
+        <div class="glass-card">
+            <div class="profile-section">
+                <div class="profile-img-wrapper" title="رياض حمادي">
+                    <div class="profile-img-ring"></div>
+                    <div class="profile-img-inner">
+                        <img src="profile.jpg" alt="رياض حمادي"
+                        onerror="this.style.display='none';this.parentElement.querySelector('.profile-placeholder').style.display='flex';">
+                        <div class="profile-placeholder" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><circle cx="12" cy="8" r="5"/><path d="M3 21c0-5 4-9 9-9s9 4 9 9"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="profile-name">MAD SOFT </h1>
+                <span class="profile-badge">🟢 Disponible</span>
+            </div>
+
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-tab="tab-contact"><span class="tab-icon">📱</span> Contact</button>
+                <button class="tab-btn" data-tab="tab-works"><span class="tab-icon">💼</span> Mes Projets</button>
+            </div>
+
+            <div class="tab-content active" id="tab-contact">
+                <div class="contact-grid">
+                    <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="contact-card">
+                        <div class="card-icon icon-facebook">
+                            <svg viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.991 22 12z"/></svg>
+                        </div>
+                        <span class="card-label">Facebook</span>
+                        <span class="card-value">صفحة فيسبوك</span>
+                    </a>
+                    <a href="https://www.instagram.com/hammadi_riadh_/" target="_blank" rel="noopener" class="contact-card">
+                        <div class="card-icon icon-instagram">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </div>
+                        <span class="card-label">Instagram</span>
+                        <span class="card-value">@hammadi_riadh_</span>
+                    </a>
+                    <a href="mailto:riadhriadh074@gmail.com" class="contact-card" data-copy="riadhriadh074@gmail.com">
+                        <div class="card-icon icon-gmail">
+                            <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+                        </div>
+                        <span class="card-label">Gmail</span>
+                        <span class="card-value">riadhriadh074@gmail.com</span>
+                    </a>
+                    <a href="tel:0658006095" class="contact-card" data-copy="0658006095">
+                        <div class="card-icon icon-phone">
+                            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                        </div>
+                        <span class="card-label">Téléphone</span>
+                        <span class="card-value">0658006095</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-works">
+                <div class="works-grid">
+                    <!-- Omi Hub -->
+                    <a href="https://omi-hub.lovable.app/" target="_blank" rel="noopener" class="work-card">
+                        <div class="work-img">
+                            <div class="work-icon-container">
+                                <img src="omi_icon.png" alt="Omi Hub" style="width: 48px; height: 48px; object-fit: contain;"
+                                onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=font-size:2.5rem>🌐</span>';">
+                            </div>
+                        </div>
+                        <span class="work-title">Omi Hub</span>
+                        <span class="work-desc"> موقع لتعريف تخصص: عامل في الميكرو معلوماتية  </span>
+                    </a>
+
+                    <!-- غيابي -->
+                    <div class="work-card no-link">
+                        <div class="work-img">
+                            <img src="ghiabi.png" alt="غيابي" style="width: 100%; height: 100%; object-fit: cover;"
+                            onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2c3e50, #3498db)'; this.parentElement.innerHTML='<span style=color:white;font-size:1.5rem>غيابي</span>';">
+                        </div>
+                        <span class="work-title">Ghiyabi.BBA04</span>
+                        <span class="work-desc">منصة غيابي</span>
+                    </div>
+
+                    <!-- مخزني -->
+                    <div class="work-card no-link">
+                        <div class="work-img">
+                            <img src="makhzani.png" alt="مخزني" style="width: 100%; height: 100%; object-fit: cover;"
+                            onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #8e44ad, #c0392b)'; this.parentElement.innerHTML='<span style=color:white;font-size:1.5rem>مخزني</span>';">
+                        </div>
+                        <span class="work-title">makhzani </span>
+                        <span class="work-desc">نظام إدارة المخزون</span>
+                    </div>
+
+                    <!-- تعلم الكتابة على لوحة المفاتيح -->
+                    <div class="work-card no-link">
+                        <div class="work-img">
+                            <img src="typing.png" alt="تعلم الكتابة" style="width: 100%; height: 100%; object-fit: cover;"
+                            onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #27ae60, #2ecc71)'; this.parentElement.innerHTML='<span style=color:white;font-size:1.5rem>لوحة المفاتيح</span>';">
+                        </div>
+                        <span class="work-title">طريقة تعلم الكتابة</span>
+                        <span class="work-desc">تعلم الكتابة على لوحة المفاتيح</span>
+                    </div>
+
+                    <!-- متجر إلكتروني -->
+                    <a href="#" class="work-card" target="_blank" rel="noopener">
+                        <div class="work-img">
+                            <img src="store.png" alt="متجر" style="width: 100%; height: 100%; object-fit: cover;"
+                            onerror="this.style.display='none'; this.parentElement.style.backgroundImage='url(data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 60%22%3E%3Crect fill=%22%234da8da%22 width=%22100%22 height=%2260%22/%3E%3Ctext x=%2250%22 y=%2235%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2210%22%3Eمتجر%3C/text%3E%3C/svg%3E)'; this.parentElement.style.backgroundSize='cover';">
+                        </div>
+                        <span class="work-title">متجر إلكتروني</span>
+                        <span class="work-desc">تصميم متجر عصري متكامل</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="copy-toast" id="copyToast">✅ تم النسخ إلى الحافظة</div>
+
+    <script>
+        (function() {
+            const pc = document.getElementById('particlesContainer');
+            for (let i=0; i<35; i++) {
+                const p = document.createElement('div'); p.className='particle';
+                const s = Math.random()*3.5+1.5;
+                p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*8}s;animation-duration:${Math.random()*8+7}s;opacity:${Math.random()*0.5+0.1}`;
+                pc.appendChild(p);
+            }
+            const btns = document.querySelectorAll('.tab-btn');
+            const tabs = document.querySelectorAll('.tab-content');
+            btns.forEach(b => b.addEventListener('click', function() {
+                const target = this.dataset.tab;
+                btns.forEach(x => x.classList.remove('active'));
+                tabs.forEach(x => x.classList.remove('active'));
+                this.classList.add('active');
+                const el = document.getElementById(target);
+                if(el) { el.classList.add('active'); el.style.animation='none'; el.offsetHeight; el.style.animation='fadeSlideIn 0.45s ease forwards'; }
+            }));
+            const toast = document.getElementById('copyToast');
+            let timer;
+            function show(msg) { clearTimeout(timer); toast.textContent=msg; toast.classList.add('show'); timer=setTimeout(()=>toast.classList.remove('show'),2200); }
+            document.querySelectorAll('[data-copy]').forEach(el => {
+                let pressTimer;
+                el.addEventListener('touchstart', e => { pressTimer = setTimeout(() => { e.preventDefault(); navigator.clipboard?.writeText(el.dataset.copy).then(()=>show('✅ تم نسخ: '+el.dataset.copy)).catch(()=>show('⚠️ تعذر النسخ')); },600); }, {passive:false});
+                el.addEventListener('touchend', ()=>clearTimeout(pressTimer));
+                el.addEventListener('touchmove', ()=>clearTimeout(pressTimer));
+                el.addEventListener('dblclick', e => { e.preventDefault(); navigator.clipboard?.writeText(el.dataset.copy).then(()=>show('✅ تم نسخ: '+el.dataset.copy)).catch(()=>show('⚠️ تعذر النسخ')); });
+            });
+        })();
+    </script>
+</body>
+</html>
